@@ -13,62 +13,57 @@ package UD6.CasoPractico2Banco;
  */
 public class Cuenta {
 
-    //ATRIBUTOS
-    private String titular;
+    private String nombre;
     private double saldo;
 
-    //CONSTRUCTOR
-    public Cuenta(String titular, double saldo) {
-        if (saldo >= 0) {
-            this.titular = titular;
-            this.saldo = saldo;
-        } else {
-            System.err.println("ERROR: No se puede crear una cuenta con saldo negativo.");
-        }
+    //Constructor
+    public Cuenta(String nombre, double saldo) {
+
     }
 
-    //GETTERS/SETTERS
-    public String getTitular() {
-        return titular;
-    }
-
-    public void setTitular(String titular) {
-        this.titular = titular;
+    //Getters - Setters
+    public String getNombre() {
+        return nombre;
     }
 
     public double getSaldo() {
         return saldo;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    //MÉTODOS
-    public void ingresarDinero(double cantidad) {
-        if (cantidad > 0) {
-            saldo += cantidad;
+        if (saldo < -100) {
+            System.err.println("El saldo no puede ser inferior a 100€.");
         } else {
-            System.err.println("ERROR: No se puede crear una cuenta con cantidad negativa.");
+            this.saldo = saldo;
         }
     }
 
-    public void retirarDinero(double cantidad) {
-        if ((saldo + 100) >= cantidad) {
-            if (cantidad > 0) {
-                saldo -= cantidad;
-            } else {
-                System.err.println("El saldo es inferior a la cantidad a retirar");
-            }
+    //Otras funciones
+    public void verCuenta() {
+        System.out.println(this.nombre + "\t" + this.saldo);
+        System.out.println("");
+    }
+
+    public void ingresar(double dinero) {
+        if (dinero < 0) {
+            System.err.println("No se puede ingresar dinero negativo. La operación fue cancelada.");
+        } else {
+            this.saldo += dinero;
         }
     }
 
-    public String getAll() {
-        return (titular + "  Saldo: " + saldo);
+    public boolean retirar(double dinero) {
+        if ((this.saldo - dinero) < -100) {
+            System.err.println("La cuenta no puede tener un saldo inferior a -100€");
+            return false;
+        } else {
+            System.out.println("La operación se ha realizado con éxito");
+            this.saldo -= dinero;
+            return true;
+        }
     }
-
-    public void imprimir() {
-        System.out.println(getAll());
-    }
-
 }
